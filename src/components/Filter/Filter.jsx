@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import style from './Filter.module.css'
+import changeFilter from '../../redux/filter/filter-action'
 const Filter = ({filter, handleChange}) => {
     return (
         <div>
@@ -10,10 +12,14 @@ const Filter = ({filter, handleChange}) => {
         </div>
     );
 };
-
+const mapStateToProps=(state)=>({
+    filter: state.filter
+})
+const mapDispatchToProps = dispatch => ({
+    handleChange: (e)=> dispatch(changeFilter(e.target.value.trim()))
+})
 Filter.propTypes={
-    filter: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
 }
 
-export default Filter;
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
